@@ -1,6 +1,6 @@
 export const profile = {
   name: "Jasper Teo",
-  role: "IT Student & Front-End Developer",
+  role: "IT Student & Web Developer",
   tagline:
     "I build interactive, user-centric web experiences, and I'm exploring AI-driven development.",
   location: "Singapore",

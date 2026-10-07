@@ -1,13 +1,11 @@
 import HeroScene from "@/components/HeroScene";
 import ProjectList from "@/components/ProjectList";
 import Reveal from "@/components/Reveal";
+import SkillsShowcase from "@/components/SkillsShowcase";
 import SplitWords from "@/components/SplitWords";
 import TransitionLink from "@/components/TransitionLink";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
-import { skillGroups } from "@/data/skills";
-
-const marqueeItems = skillGroups.flatMap((g) => g.items);
 
 export default function Home() {
   return (
@@ -22,7 +20,7 @@ export default function Home() {
             <span className="mr-2 inline-block size-2 animate-pulse rounded-full bg-accent" />
             status: online · {profile.role} · {profile.location}
           </p>
-          <h1 className="text-[clamp(3.5rem,13vw,10rem)] font-semibold leading-[0.9] tracking-tighter">
+          <h1 className="text-[clamp(3rem,10vw,7.5rem)] font-semibold leading-[0.9] tracking-tighter">
             <SplitWords text={profile.name} />
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted">{profile.tagline}</p>
@@ -43,18 +41,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        aria-hidden
-        className="overflow-hidden border-y border-line py-6 text-3xl font-semibold tracking-tight text-muted sm:text-5xl"
-      >
-        <div className="marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((item, i) => (
-            <span key={i} className="px-6">
-              {item} <span className="text-accent">✦</span>
-            </span>
-          ))}
-        </div>
-      </section>
+      <SkillsShowcase />
 
       <section className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
         <Reveal className="mb-10 flex items-end justify-between gap-4">

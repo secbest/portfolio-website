@@ -20,9 +20,12 @@
 
 html {
   color-scheme: dark;
+  /* Off-screen animation start states (x offsets, 3D) must never add a horizontal scrollbar. */
+  overflow-x: clip;
 }
 
 body {
+  overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
@@ -92,6 +95,25 @@ html.custom-cursor textarea {
   color: #0a0a0a;
 }
 
+/* Greeting that types out under the face */
+@keyframes greeting-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.greeting-in {
+  animation: greeting-in 0.5s ease-out both;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: caret-blink 0.9s steps(1) infinite;
+}
+
 /* Faint circuit-grid backdrop for the hero */
 .grid-bg {
   background-image:
@@ -101,22 +123,32 @@ html.custom-cursor textarea {
   mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 75%);
 }
 
-/* Marquee */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
+/* Skills showcase: pinned mode is switched on from JS (SkillsShowcase.tsx) */
+.skills-panel {
+  padding: 4rem 0;
 }
-.marquee-track {
+.skills-section:not(.skills-pinned) .skills-ui {
+  display: none;
+}
+.skills-section:not(.skills-pinned) .skills-stage {
+  padding-top: 4rem;
+}
+.skills-pinned {
+  height: 100svh;
+  overflow: hidden;
+}
+.skills-pinned .skills-stage {
+  height: 100%;
+}
+.skills-pinned .skills-panel {
+  position: absolute;
+  inset: 0;
   display: flex;
-  width: max-content;
-  animation: marquee 30s linear infinite;
+  align-items: center;
+  padding: 7rem 0 6rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
   .cursor {
     display: none;
   }

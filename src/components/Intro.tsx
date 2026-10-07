@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const LINES = [
   "> booting jasper-os v1.0.0",
-  "> mounting modules: react · next.js · three.js · gsap",
+  "> mounting modules: react Â· next.js Â· three.js Â· gsap",
   "> loading neural interface ........ ok",
   "> calibrating model weights ....... ok",
   "> compiling portfolio ............. ok",
@@ -13,7 +13,7 @@ const LINES = [
 ];
 
 /**
- * Boot-sequence overlay shown on every full page load. It dispatches
+ * Boot-sequence overlay shown on the first load of each browser tab session. It dispatches
  * `intro:reveal` when the panels start to split so page animations can wait.
  */
 export default function Intro() {
@@ -34,12 +34,27 @@ export default function Intro() {
       return;
     }
 
+    // Only play the boot sequence once per browser tab session.
+    try {
+      if (sessionStorage.getItem("intro-seen")) {
+        el.style.display = "none";
+        return;
+      }
+    } catch {
+      // Storage can be blocked; fall through and play the intro.
+    }
+
     const html = document.documentElement;
     html.dataset.intro = "playing";
     document.body.style.overflow = "hidden";
     lines.current.forEach((l) => l && (l.textContent = ""));
 
     const finish = () => {
+      try {
+        sessionStorage.setItem("intro-seen", "1");
+      } catch {
+        // ignore
+      }
       html.dataset.intro = "done";
       document.body.style.overflow = "";
       el.style.display = "none";
@@ -55,12 +70,12 @@ export default function Intro() {
         const typed = { n: 0 };
         tl.to(typed, {
           n: text.length,
-          duration: Math.max(0.3, text.length * 0.016),
+          duration: Math.max(0.3, text.length * 0.017),
           ease: "none",
           onUpdate: () => {
             target.textContent = text.slice(0, Math.round(typed.n));
           },
-        }).to({}, { duration: 0.08 });
+        }).to({}, { duration: 0.1 });
       });
 
       const progress = { v: 0 };
@@ -80,7 +95,7 @@ export default function Intro() {
       );
       tl.to(bar.current, { scaleX: 1, duration: tl.duration(), ease: "none" }, 0);
 
-      tl.to(content.current, { opacity: 0, duration: 0.3 }, "+=0.35");
+      tl.to(content.current, { opacity: 0, duration: 0.3 }, "+=0.45");
       tl.call(() => window.dispatchEvent(new Event("intro:reveal")), undefined, "<");
       tl.to(top.current, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "<");
       tl.to(bottom.current, { yPercent: 100, duration: 0.9, ease: "power4.inOut" }, "<");
@@ -132,10 +147,12 @@ export default function Intro() {
             onClick={() => timeline.current?.timeScale(8)}
             className="mt-8 text-xs text-muted hover:text-foreground"
           >
-            skip intro →
+            skip intro â†’
           </button>
         </div>
       </div>
     </div>
   );
 }
+
+
