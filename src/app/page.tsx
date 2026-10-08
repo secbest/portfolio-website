@@ -1,4 +1,5 @@
 import HeroScene from "@/components/HeroScene";
+import HeroIntro from "@/components/HeroIntro";
 import ProjectList from "@/components/ProjectList";
 import Reveal from "@/components/Reveal";
 import SkillsShowcase from "@/components/SkillsShowcase";
@@ -23,7 +24,7 @@ export default function Home() {
           <h1 className="text-[clamp(3rem,10vw,7.5rem)] font-semibold leading-[0.9] tracking-tighter">
             <SplitWords text={profile.name} />
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">{profile.tagline}</p>
+          <HeroIntro />
           <div className="pointer-events-auto mt-8 flex flex-wrap gap-3">
             <TransitionLink
               href="/projects"

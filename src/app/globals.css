@@ -148,6 +148,27 @@ html.custom-cursor textarea {
   padding: 12rem 0 4rem;
 }
 
+@property --pulse-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes signal-spin {
+  to { --pulse-angle: 360deg; }
+}
+.signal-border {
+  background:
+    conic-gradient(
+      from var(--pulse-angle),
+      transparent 0 70%,
+      rgb(34 211 238 / 0.15) 82%,
+      rgb(34 211 238 / 0.95) 98%,
+      transparent 100%
+    ),
+    rgb(255 255 255 / 0.1);
+  animation: signal-spin 12s linear infinite;
+}
+
 /* Nav icons: loop while hovered/focused, play twice when the link becomes active */
 .nav-link .nav-icon {
   overflow: visible;
@@ -239,6 +260,9 @@ html.custom-cursor textarea {
 @media (prefers-reduced-motion: reduce) {
   .cursor {
     display: none;
+  }
+  .signal-border {
+    animation: none;
   }
   .nav-link .nav-icon,
   .nav-link .nav-icon * {

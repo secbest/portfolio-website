@@ -14,6 +14,10 @@ export const profile = {
   tagline:
     "Web experiences where the interaction is the point. Animated, accessible and fast, with AI doing the heavy lifting behind the scenes.",
   location: "Singapore",
+  intro: [
+    "I enjoy building **web experiences** that feel alive, from council websites that residents rely on every day to animated portfolios with 3D scenes and scroll-driven motion.",
+    "I pair clean front-end craft with a growing interest in **AI-driven development** to build things that are fast, accessible and a pleasure to use. I'm currently looking for internships where I can keep learning by shipping real products.",
+  ],
   email: "jastkc8@gmail.com",
   linkedin: "https://www.linkedin.com/in/jasper-teo-jt",
   github: "https://github.com/secbest",
