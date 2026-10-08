@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import SkillIcon from "@/components/SkillIcon";
 import { skillGroups } from "@/data/skills";
 import { getLenis } from "@/lib/lenis";
 
@@ -128,9 +129,12 @@ export default function SkillsShowcase({ heading = "h2" }: { heading?: "h1" | "h
                 {group.items.map((item) => (
                   <li
                     key={item}
-                    className="skills-item flex items-center gap-4 border-b border-line py-2.5 text-2xl font-medium sm:py-3 sm:text-4xl"
+                    className="skills-item group flex items-center gap-4 border-b border-line py-2.5 text-2xl font-medium sm:py-3 sm:text-4xl"
                   >
-                    <span className="size-2 shrink-0 rounded-full bg-accent" />
+                    <SkillIcon
+                      name={item}
+                      className="size-6 shrink-0 text-foreground/60 transition-colors duration-300 group-hover:text-accent sm:size-8"
+                    />
                     {item}
                   </li>
                 ))}
@@ -139,10 +143,7 @@ export default function SkillsShowcase({ heading = "h2" }: { heading?: "h1" | "h
           </div>
         ))}
 
-        <div className="skills-ui absolute inset-x-0 bottom-8 z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
-          <div className="mb-3 h-px bg-line">
-            <div className="skills-fill h-full origin-left scale-x-0 bg-accent" />
-          </div>
+        <div className="skills-ui absolute inset-x-0 top-36 z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
           <ul className="flex justify-between gap-2 font-mono text-xs text-muted">
             {skillGroups.map((group, i) => (
               <li key={group.title}>
@@ -160,6 +161,9 @@ export default function SkillsShowcase({ heading = "h2" }: { heading?: "h1" | "h
               </li>
             ))}
           </ul>
+          <div className="mt-3 h-px bg-line">
+            <div className="skills-fill h-full origin-left scale-x-0 bg-accent" />
+          </div>
         </div>
       </div>
     </section>

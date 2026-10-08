@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import SplitWords from "@/components/SplitWords";
+import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcons";
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = { title: "Contact" };
@@ -27,16 +28,24 @@ export default function ContactPage() {
               {profile.email}
             </a>
           </p>
-          <p>
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="text-muted hover:text-foreground"
-            >
-              LinkedIn ↗
-            </a>
-          </p>
+          <ul className="flex flex-wrap gap-x-8 gap-y-3">
+            {[
+              { href: profile.linkedin, label: "LinkedIn", Icon: LinkedInIcon },
+              { href: profile.github, label: "GitHub", Icon: GitHubIcon },
+            ].map(({ href, label, Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2.5 text-muted transition-colors hover:text-accent"
+                >
+                  <Icon className="size-6" />
+                  {label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
         </Reveal>
         <Reveal>
           <ContactForm email={profile.email} />
