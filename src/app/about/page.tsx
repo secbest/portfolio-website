@@ -1,54 +1,21 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import AboutVideo from "@/components/AboutVideo";
+import BeyondCode from "@/components/BeyondCode";
+import EntryList from "@/components/EntryList";
 import Reveal from "@/components/Reveal";
 import SplitWords from "@/components/SplitWords";
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = { title: "About" };
+export const revalidate = 3600;
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .filter((w) => /^[A-Z]/.test(w))
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 3);
-
-type LogoFit = "contain" | "cover" | "small";
-
-const logoFit: Record<LogoFit, { box: string; img: string }> = {
-  contain: { box: "p-1", img: "object-contain" },
-  small: { box: "p-1.65", img: "object-contain" },
-  cover: { box: "p-0", img: "object-cover" },
-};
-
-function LogoTile({ src, name, fit = "contain" }: { src?: string; name: string; fit?: LogoFit }) {
-  return (
-    <div className="relative grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl border border-line bg-white/95 font-mono text-sm font-semibold text-black">
-      {src ? (
-        <div className={`size-full ${logoFit[fit].box}`}>
-          <div className="relative size-full">
-            <Image
-              src={src}
-              alt={`${name} logo`}
-              fill
-              sizes="56px"
-              className={`object-center ${logoFit[fit].img}`}
-            />
-          </div>
-        </div>
-      ) : (
-        <span aria-hidden>{initials(name)}</span>
-      )}
-    </div>
-  );
-}
-
-function Block({ title, children }: { title: string; children: React.ReactNode }) {
+function Block({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
     <Reveal className="grid gap-4 border-t border-line py-10 sm:grid-cols-[14rem_1fr]">
-      <h2 className="font-mono text-sm text-accent">{title}</h2>
+      <div>
+        <h2 className="font-mono text-sm text-accent">{title}</h2>
+        {hint && <p className="mt-2 max-w-[12rem] font-mono text-xs text-muted">{hint}</p>}
+      </div>
       <div>{children}</div>
     </Reveal>
   );
@@ -75,40 +42,32 @@ export default function AboutPage() {
         </Reveal>
       </div>
 
-      <Block title="Education">
-        <ul className="space-y-5">
-          {profile.education.map((e) => (
-            <li key={e.school} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-              <div className="flex items-center gap-4">
-                <LogoTile src={e.logo} name={e.school} fit={e.logoFit} />
-                <div>
-                  <p className="text-lg font-medium">{e.school}</p>
-                  <p className="text-muted">{e.programme}</p>
-                </div>
-              </div>
-              <p className="font-mono text-sm text-muted">{e.period}</p>
-            </li>
-          ))}
-        </ul>
+      <Block title="Education" hint="Click an item to see more">
+        <EntryList
+          items={profile.education.map((e) => ({
+            id: e.school,
+            title: e.school,
+            subtitle: e.programme,
+            period: e.period,
+            logo: e.logo,
+            logoFit: e.logoFit,
+            details: e.details,
+          }))}
+        />
       </Block>
 
-      <Block title="Experience">
-        <ul className="space-y-5">
-          {profile.experience.map((e) => (
-            <li key={e.company} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-              <div className="flex items-center gap-4">
-                <LogoTile src={e.logo} name={e.company} fit={e.logoFit} />
-                <div>
-                  <p className="text-lg font-medium">
-                    {e.role}, {e.company}
-                  </p>
-                  <p className="text-muted">{e.summary}</p>
-                </div>
-              </div>
-              <p className="font-mono text-sm text-muted">{e.period}</p>
-            </li>
-          ))}
-        </ul>
+      <Block title="Experience" hint="Click an item to see more">
+        <EntryList
+          items={profile.experience.map((e) => ({
+            id: e.company,
+            title: `${e.role}, ${e.company}`,
+            subtitle: e.summary,
+            period: e.period,
+            logo: e.logo,
+            logoFit: e.logoFit,
+            details: e.details,
+          }))}
+        />
       </Block>
 
       <Block title="Certifications">
@@ -134,6 +93,8 @@ export default function AboutPage() {
           ))}
         </ul>
       </Block>
+
+      <BeyondCode />
     </div>
   );
 }

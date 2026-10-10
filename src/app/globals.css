@@ -148,6 +148,11 @@ html.custom-cursor textarea {
   padding: 12rem 0 4rem;
 }
 
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
 @property --pulse-angle {
   syntax: "<angle>";
   initial-value: 0deg;

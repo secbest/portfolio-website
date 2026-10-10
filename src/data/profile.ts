@@ -1,3 +1,9 @@
+export type EntryDetails = {
+  summary: string;
+  highlights?: string[];
+  link?: { label: string; href: string };
+};
+
 type Education = {
   school: string;
   programme: string;
@@ -6,6 +12,8 @@ type Education = {
   logo?: string;
   /** How the logo fills its tile. Defaults to "contain". */
   logoFit?: "contain" | "cover" | "small";
+  /** Shown in the popup when the row is clicked. Draft wording: edit freely. */
+  details?: EntryDetails;
 };
 
 export const profile = {
@@ -34,12 +42,23 @@ export const profile = {
       programme: "Diploma in Information Technology",
       period: "2025 – 2028",
       logo: "/logos/np.png",
+      details: {
+        summary: "A three-year diploma at Nanyang Polytechnic's School of Information Technology, where I'm now in Year 2.",
+        highlights: [
+          "Building full-stack web projects and exploring AI-driven development",
+          "Overseas exchange semester at Gachon University in 2026",
+        ],
+      },
     },
     {
       school: "Gachon University",
       programme: "Computer Engineering (exchange)",
       period: "Sep – Dec 2026",
       logo: "/logos/gachon.png",
+      details: {
+        summary: "An exchange semester in Computer Engineering at Gachon University in South Korea, as part of my diploma.",
+        highlights: ["Studying computer engineering modules abroad", "Experiencing a new campus, culture and way of learning"],
+      },
     },
     {
       school: "Institute of Technical Education",
@@ -47,13 +66,21 @@ export const profile = {
       period: "2023 – 2025",
       logo: "/logos/ite.png",
       logoFit: "cover",
+      details: {
+        summary: "A Higher Nitec in IT Applications Development at ITE College Central, the foundation for my diploma.",
+        highlights: ["Programming, web and application development fundamentals", "Led directly into my Diploma in IT at Nanyang Polytechnic"],
+      },
     },
     {
       school: "Holy Innocents' High School",
-      programme: "GCE O Levels",
+      programme: "GCE N&O Levels",
       period: "2019 – 2022",
       logo: "/logos/hihs.png",
       logoFit: "small",
+      details: {
+        summary: "My GCE N&O Levels at Holy Innocents' High School.",
+        highlights: ["Where my interest in tech began: publishing WordPress blogs in secondary school"],
+      },
     },
   ] as Education[],
   experience: [
@@ -64,6 +91,14 @@ export const profile = {
       summary: "Web design and development using WordPress.",
       logo: "/logos/sf.png",
       logoFit: "small" as const,
+      details: {
+        summary: "My first internship: designing and building WordPress websites for clients at SF Technologies.",
+        highlights: [
+          "Web design and development with WordPress and Elementor",
+          "Worked on the Jalan Besar Town Council website",
+        ],
+        link: { label: "See the project", href: "/projects/jalan-besar-town-council" },
+      } as EntryDetails,
     },
   ],
   certifications: [

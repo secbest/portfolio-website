@@ -109,3 +109,4 @@ Keep skills data in one file (e.g. `src/data/skills.ts`) so the Skills page and 
 - Run `npm run build` and `npm run lint` before committing.
 - Do not commit secrets. Use `.env.local` for keys, and add new env vars to Vercel project settings.
 - Commit only when asked.
+- Commit messages follow the series `selected coding works <Roman numeral>`: I, II, III, IV and so on, in order. The latest used is IV, so the next is `selected coding works V`. The user may name a commit explicitly; follow that and keep the series going from it.
