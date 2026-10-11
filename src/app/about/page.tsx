@@ -1,13 +1,28 @@
 import type { Metadata } from "next";
 import AboutVideo from "@/components/AboutVideo";
 import BeyondCode from "@/components/BeyondCode";
+import AwardsList, { type Award } from "@/components/AwardsList";
 import EntryList from "@/components/EntryList";
+import IssuerTile from "@/components/IssuerTile";
 import Reveal from "@/components/Reveal";
-import SplitWords from "@/components/SplitWords";
-import { profile } from "@/data/profile";
+import SplitFlap from "@/components/SplitFlap";
+import { awardAliases, profile } from "@/data/profile";
 
 export const metadata: Metadata = { title: "About" };
 export const revalidate = 3600;
+
+// Academic awards come from the education entries (competitions are left out), so editing an achievement there updates this list too.
+const awards: Award[] = profile.education.flatMap((e) =>
+  (e.details?.sections ?? [])
+    .filter((sec) => sec.kind === "achievement")
+    .flatMap((sec) =>
+      sec.items.map((title) => ({
+        title: awardAliases[title] ?? title,
+        schoolId: e.school,
+        school: e.short ?? e.school,
+      })),
+    ),
+);
 
 function Block({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
@@ -27,7 +42,7 @@ export default function AboutPage() {
       <div className="mb-20 grid items-start gap-12 lg:grid-cols-[1fr_22rem] lg:gap-16">
         <div>
           <h1 className="mb-16 text-[clamp(3rem,10vw,8rem)] font-semibold leading-[0.95] tracking-tighter">
-            <SplitWords text="About me" />
+            <SplitFlap text="About me" />
           </h1>
 
           <Reveal className="max-w-3xl space-y-5 text-xl leading-relaxed text-foreground/90">
@@ -71,19 +86,21 @@ export default function AboutPage() {
       </Block>
 
       <Block title="Certifications">
-        <ul className="space-y-2 text-lg">
+        <ul className="space-y-4">
           {profile.certifications.map((c) => (
-            <li key={c}>{c}</li>
+            <li key={c.title} className="flex items-center gap-4">
+              <IssuerTile issuer={c.issuer} />
+              <div>
+                <p className="text-lg font-medium">{c.title}</p>
+                <p className="text-muted">{c.issuer}</p>
+              </div>
+            </li>
           ))}
         </ul>
       </Block>
 
-      <Block title="Awards">
-        <ul className="space-y-2 text-lg">
-          {profile.awards.map((a) => (
-            <li key={a}>{a}</li>
-          ))}
-        </ul>
+      <Block title="Awards" hint="Click an award to see where it came from">
+        <AwardsList awards={awards} />
       </Block>
 
       <Block title="Languages">

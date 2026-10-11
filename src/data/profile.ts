@@ -1,11 +1,15 @@
 export type EntryDetails = {
   summary: string;
   highlights?: string[];
+  /** Labelled groups such as activities or skills. `chips` shows items as small tags. */
+  sections?: { label: string; items: string[]; chips?: boolean; kind?: "achievement" | "competition" | "distinction" }[];
   link?: { label: string; href: string };
 };
 
 type Education = {
   school: string;
+  /** Short label used where space is tight, e.g. "NYP". */
+  short?: string;
   programme: string;
   period: string;
   /** Path under /public, e.g. "/logos/np.png". Falls back to the school's initials. */
@@ -14,6 +18,11 @@ type Education = {
   logoFit?: "contain" | "cover" | "small";
   /** Shown in the popup when the row is clicked. Draft wording: edit freely. */
   details?: EntryDetails;
+};
+
+/** Shorter names for the Awards list on the About page. The full title still shows in the education popup. */
+export const awardAliases: Record<string, string> = {
+  "Edusave Award for Achievement, Good Leadership and Service (EAGLES) 2022": "EAGLES Award",
 };
 
 export const profile = {
@@ -39,47 +48,93 @@ export const profile = {
   education: [
     {
       school: "Nanyang Polytechnic",
+      short: "NYP",
       programme: "Diploma in Information Technology",
       period: "2025 – 2028",
       logo: "/logos/np.png",
       details: {
         summary: "A three-year diploma at Nanyang Polytechnic's School of Information Technology, where I'm now in Year 2.",
-        highlights: [
-          "Building full-stack web projects and exploring AI-driven development",
-          "Overseas exchange semester at Gachon University in 2026",
+        sections: [
+          { label: "CCA", items: ["SIT Club Subcommittee (2025 – Present)"] },
+          { label: "Notable activities", items: ["SIT EAE Festival 2025 & 2026"] },
+          { label: "Competitions & hackathons", kind: "competition", items: ["NTUC's e2i Tech Hackathon 2026: 🥈 2nd place"] },
+          {
+            label: "Achievements",
+            kind: "achievement",
+            items: [
+              "Director's List 2025/26 Semester 1 & 2",
+              "Director's List 2026/27 Semester 1",
+              "Edusave Certificate of Academic Achievement 2026",
+            ],
+          },
+          {
+            label: "Distinction modules (A+, Top 5%)",
+            kind: "distinction",
+            items: [
+              "Cybersecurity Technologies & Ethics",
+              "Digital User Experience Design",
+              "Full Stack Application Development",
+            ],
+          },
         ],
       },
     },
     {
       school: "Gachon University",
+      short: "Gachon",
       programme: "Computer Engineering (exchange)",
       period: "Sep – Dec 2026",
       logo: "/logos/gachon.png",
       details: {
-        summary: "An exchange semester in Computer Engineering at Gachon University in South Korea, as part of my diploma.",
-        highlights: ["Studying computer engineering modules abroad", "Experiencing a new campus, culture and way of learning"],
+        summary: "Currently studying bachelor-level courses in Computer Engineering as an exchange student at Gachon University in South Korea.",
+        sections: [
+          {
+            label: "Courses taken",
+            items: ["Operating Systems", "Database", "Machine Learning Programming", "Consumer Behavior", "Web Programming"],
+          },
+        ],
       },
     },
     {
       school: "Institute of Technical Education",
+      short: "ITE",
       programme: "Higher Nitec in IT Applications Development",
       period: "2023 – 2025",
       logo: "/logos/ite.png",
       logoFit: "cover",
       details: {
-        summary: "A Higher Nitec in IT Applications Development at ITE College Central, the foundation for my diploma.",
-        highlights: ["Programming, web and application development fundamentals", "Led directly into my Diploma in IT at Nanyang Polytechnic"],
+        summary: "A Higher Nitec in IT Applications Development at ITE College Central, the foundation for my diploma at Nanyang Polytechnic.",
+        sections: [
+          { label: "Co-curricular activities", items: ["EXCO Member, IAD Club", "Member, Peer Support Leader"] },
+          {
+            label: "Distinction modules (A+, Top 5%)",
+            kind: "distinction",
+            items: ["Server Side Development", "Website Optimisation", "Enterprise Web Development"],
+          },
+        ],
       },
     },
     {
       school: "Holy Innocents' High School",
+      short: "HIHS",
       programme: "GCE N&O Levels",
       period: "2019 – 2022",
       logo: "/logos/hihs.png",
       logoFit: "small",
       details: {
-        summary: "My GCE N&O Levels at Holy Innocents' High School.",
-        highlights: ["Where my interest in tech began: publishing WordPress blogs in secondary school"],
+        summary: "My GCE N&O Levels at Holy Innocents' High School, and where my interest in tech began, publishing WordPress blogs.",
+        sections: [
+          { label: "Co-curricular activities", items: ["Senior Patrol Leader, Scouts"] },
+          {
+            label: "Achievements",
+            kind: "achievement",
+            items: [
+              "Scouts Chief Commissioner Award",
+              "Edusave Award for Achievement, Good Leadership and Service (EAGLES) 2022",
+              "Edusave Scholarship Award 2021 & 2022",
+            ],
+          },
+        ],
       },
     },
   ] as Education[],
@@ -102,13 +157,8 @@ export const profile = {
     },
   ],
   certifications: [
-    "User Experience Design Fundamentals",
-    "AI Fluency Framework & Foundations",
-    "Web Development Fundamentals",
-  ],
-  awards: [
-    "Edusave Scholarship Award (MOE)",
-    "Chief Commissioner Award",
-    "Edusave Award for Achievement, Good Leadership and Service (EAGLES)",
-  ],
+    { title: "User Experience Design Fundamentals", issuer: "IBM" },
+    { title: "AI Fluency Framework & Foundations", issuer: "IBM" },
+    { title: "Web Development Fundamentals", issuer: "Anthropic" },
+  ] as { title: string; issuer: "IBM" | "Anthropic" }[],
 };

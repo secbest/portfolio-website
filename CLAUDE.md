@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## Project
 
-Personal portfolio website for **Jasper Teo**, a Year 2 Information Technology student at Nanyang Polytechnic (previously ITE). It is an **interactive motion-design portfolio**: the site itself should show off animation and front-end craft.
+Personal portfolio website for **Jasper Teo**, a Year 2 Information Technology student at Nanyang Polytechnic, abbreviated **NYP** (previously ITE). Always write NYP, never "NP". It is an **interactive motion-design portfolio**: the site itself should show off animation and front-end craft.
 
 - LinkedIn: https://www.linkedin.com/in/jasper-teo-jt/
 - Hosting: GitHub repo, deployed on Vercel (auto-deploy on push to `main`)
@@ -15,7 +15,7 @@ Personal portfolio website for **Jasper Teo**, a Year 2 Information Technology s
 A single Next.js app with these routes:
 
 1. **Home**: hero with intro animation, short tagline, call to action
-2. **About**: background, education (ITE, then Nanyang Polytechnic IT), interests
+2. **About**: background, education (ITE, then Nanyang Polytechnic (NYP) IT), interests
 3. **Skills**: grouped by category (see below), animated reveal
 4. **Projects**: grid of project cards, each linking to a project detail page
 5. **Contact**: contact form or links (email, LinkedIn, GitHub)
@@ -47,11 +47,11 @@ Prefer these over adding new libraries. Ask before introducing a new dependency.
 ## Content: about Jasper (source: LinkedIn resume)
 
 - **Contact:** jastkc8@gmail.com, https://www.linkedin.com/in/jasper-teo-jt, old portfolio https://jastkc8.wixsite.com/digitalportfolio
-- **Summary:** Year 2 IT student at Nanyang Polytechnic, building on IT Applications Development from ITE College Central. Interest in tech began in secondary school publishing WordPress blogs. Passionate about user-centric web apps; currently exploring AI-driven development.
+- **Summary:** Year 2 IT student at Nanyang Polytechnic (NYP), building on IT Applications Development from ITE College Central. Interest in tech began in secondary school publishing WordPress blogs. Passionate about user-centric web apps; currently exploring AI-driven development.
 - **Top skills:** AI, Cybersecurity, Programming. **Languages:** English (native/bilingual), Chinese (elementary).
 - **Experience:** Web Developer at SF Technologies Pte Ltd (Sep 2024 to Feb 2025), WordPress design and development, including https://jbtc.org.sg/. Also two short stints as a waiter at Thai Accent (omit or de-emphasise on the site).
 - **Education:**
-  - Nanyang Polytechnic, Diploma in Information Technology (Apr 2025 to Apr 2028)
+  - Nanyang Polytechnic (NYP), Diploma in Information Technology (Apr 2025 to Apr 2028)
   - Gachon University, Computer Engineering exchange (Sep 2026 to Dec 2026)
   - ITE College Central, Higher Nitec in IT Applications Development (2023 to 2025)
   - Holy Innocents' High School, GCE O Levels (2019 to 2022)

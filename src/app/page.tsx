@@ -3,7 +3,7 @@ import HeroIntro from "@/components/HeroIntro";
 import ProjectList from "@/components/ProjectList";
 import Reveal from "@/components/Reveal";
 import SkillsShowcase from "@/components/SkillsShowcase";
-import SplitWords from "@/components/SplitWords";
+import SplitFlap from "@/components/SplitFlap";
 import TransitionLink from "@/components/TransitionLink";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
@@ -22,7 +22,7 @@ export default function Home() {
             status: online · {profile.role} · {profile.location}
           </p>
           <h1 className="text-[clamp(3rem,10vw,7.5rem)] font-semibold leading-[0.9] tracking-tighter">
-            <SplitWords text={profile.name} />
+            <SplitFlap text={profile.name} />
           </h1>
           <HeroIntro />
           <div className="pointer-events-auto mt-8 flex flex-wrap gap-3">

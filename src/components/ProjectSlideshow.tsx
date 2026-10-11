@@ -234,7 +234,7 @@ export default function ProjectSlideshow({
               role="dialog"
               aria-modal="true"
               aria-label={shown.caption}
-              className="fixed inset-0 z-[95] flex flex-col items-center justify-center bg-black/90 p-4 backdrop-blur-md sm:p-8"
+              className="fixed inset-0 z-[95] flex flex-col items-center justify-center bg-black/90 p-4 sm:p-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

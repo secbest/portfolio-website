@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
-import SplitWords from "@/components/SplitWords";
+import SplitFlap from "@/components/SplitFlap";
 import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcons";
 import { profile } from "@/data/profile";
 
@@ -11,7 +11,7 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 pb-24 pt-36 sm:px-8">
       <h1 className="mb-16 text-[clamp(3rem,10vw,8rem)] font-semibold leading-[0.95] tracking-tighter">
-        <SplitWords text="Let's talk" />
+        <SplitFlap text="Let's talk" />
       </h1>
 
       <div className="grid gap-16 border-t border-line pt-10 md:grid-cols-2">

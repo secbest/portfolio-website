@@ -44,7 +44,7 @@ export default function DetailDialog({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[95] grid place-items-center bg-black/80 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-[95] grid place-items-center bg-black/85 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -53,9 +53,10 @@ export default function DetailDialog({
         >
           <motion.div
             role="dialog"
+            data-lenis-prevent
             aria-modal="true"
             aria-label={label}
-            className="relative max-h-[88vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-line bg-background p-6 shadow-[0_0_80px_-30px_rgb(34_211_238/0.6)] sm:p-8"
+            className="relative max-h-[88vh] w-full max-w-xl overflow-y-auto overscroll-contain rounded-2xl border border-line bg-background p-6 shadow-[0_0_80px_-30px_rgb(34_211_238/0.6)] sm:p-8"
             initial={reduced ? false : { opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 12, scale: 0.98 }}
