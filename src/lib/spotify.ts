@@ -1,3 +1,5 @@
+import { spotifyFeatures } from "@/data/spotify-config";
+
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
 const API = "https://api.spotify.com/v1";
 
@@ -88,8 +90,8 @@ export async function getSpotifyOverview(): Promise<SpotifyOverview | null> {
     get<{ items: Artist[] }>(token, "/me/top/artists?limit=20&time_range=short_term"),
     get<{ items: Track[] }>(token, "/me/top/tracks?limit=5&time_range=short_term"),
     get<{ items: { track: Track }[] }>(token, "/me/player/recently-played?limit=5"),
-    get<{ items: { track: Track }[] }>(token, "/me/tracks?limit=3"),
-    get<{ items: Playlist[] }>(token, "/me/playlists?limit=20"),
+    spotifyFeatures.latestAdditions ? get<{ items: { track: Track }[] }>(token, "/me/tracks?limit=3") : null,
+    spotifyFeatures.playlists ? get<{ items: Playlist[] }>(token, "/me/playlists?limit=20") : null,
   ]);
 
   const stats: RangeStats = {

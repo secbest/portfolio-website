@@ -158,7 +158,7 @@ export const profile = {
   ],
   certifications: [
     { title: "User Experience Design Fundamentals", issuer: "IBM" },
-    { title: "AI Fluency Framework & Foundations", issuer: "IBM" },
-    { title: "Web Development Fundamentals", issuer: "Anthropic" },
+    { title: "AI Fluency Framework & Foundations", issuer: "Anthropic" },
+    { title: "Web Development Fundamentals", issuer: "IBM" },
   ] as { title: string; issuer: "IBM" | "Anthropic" }[],
 };

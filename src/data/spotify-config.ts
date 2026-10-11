@@ -5,9 +5,9 @@ export const spotifyFeatures = {
   mostPlayedSong: true,
   topArtists: true,
   topTracks: true,
-  topGenres: true,
+  topGenres: false,
   recentlyPlayed: true,
   latestAdditions: true,
-  playlists: true,
+  playlists: false,
   listeningByHour: true,
 };
