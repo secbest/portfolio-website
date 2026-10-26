@@ -123,6 +123,44 @@ html.custom-cursor textarea {
   mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 75%);
 }
 
+/* Result badge: a cyan glow that slowly breathes */
+@keyframes placement-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px -2px rgb(34 211 238 / 0.35), inset 0 0 8px -4px rgb(34 211 238 / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 28px 1px rgb(34 211 238 / 0.7), inset 0 0 12px -3px rgb(34 211 238 / 0.6);
+  }
+}
+.placement-glow {
+  box-shadow: 0 0 18px -2px rgb(34 211 238 / 0.55), inset 0 0 10px -4px rgb(34 211 238 / 0.5);
+  animation: placement-glow 2.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .placement-glow {
+    animation: none;
+  }
+}
+
+/* Loading placeholders: a cyan sheen sweeping across a dim block */
+@keyframes skeleton-sheen {
+  to {
+    background-position: -200% 0;
+  }
+}
+.skeleton {
+  background-color: rgb(255 255 255 / 0.04);
+  background-image: linear-gradient(100deg, transparent 30%, rgb(34 211 238 / 0.1) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: skeleton-sheen 1.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
 /* Skills showcase: pinned mode is switched on from JS (SkillsShowcase.tsx) */
 .skills-panel {
   padding: 4rem 0;
@@ -260,6 +298,10 @@ html.custom-cursor textarea {
 .nav-link:hover :is(.nav-hop, .nav-nod, .nav-bl, .nav-br, .nav-folder, .nav-flap, .nav-pop),
 .nav-link:focus-visible :is(.nav-hop, .nav-nod, .nav-bl, .nav-br, .nav-folder, .nav-flap, .nav-pop) {
   animation-iteration-count: infinite;
+}
+
+html[data-morph] [data-hero-target] {
+  visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

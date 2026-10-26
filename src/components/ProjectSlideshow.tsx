@@ -161,10 +161,11 @@ export default function ProjectSlideshow({
     <>
     <div
       ref={root}
+      data-hero-target
       role="group"
       aria-roledescription="carousel"
       aria-label="Project screenshots"
-      className={`group relative overflow-hidden rounded-2xl border border-line bg-white/5 shadow-[0_0_80px_-30px_rgb(34_211_238/0.5)] ${className}`}
+      className={`skeleton group relative overflow-hidden rounded-2xl border border-line shadow-[0_0_80px_-30px_rgb(34_211_238/0.5)] ${className}`}
     >
       {slides.map((s, i) => (
         <div key={s.src} className="ss-slide absolute inset-0" aria-hidden={i !== active}>
@@ -194,7 +195,7 @@ export default function ProjectSlideshow({
         aria-hidden
         className="ss-edge pointer-events-none absolute inset-y-0 z-10 w-0.5 bg-accent shadow-[0_0_24px_6px_rgb(34_211_238/0.7)]"
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-2/5 bg-gradient-to-t from-black/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-3/5 bg-gradient-to-t from-black/95 via-black/75 to-transparent" />
 
       <div className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-4 p-4 sm:p-6">
         <div className="min-w-0 overflow-hidden">
@@ -204,7 +205,7 @@ export default function ProjectSlideshow({
           >
             {pad(active + 1)} / {pad(count)}
           </p>
-          <p className="ss-caption text-sm text-white sm:text-base">{slides[active].caption}</p>
+          <p className="ss-caption text-sm font-medium text-white [text-shadow:0_1px_8px_rgb(0_0_0/0.9)] sm:text-base">{slides[active].caption}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           {(["←", "→"] as const).map((arrow, i) => (

@@ -8,6 +8,7 @@ import type { Project } from "@/data/projects";
 
 const GAP = 24;
 const DRAG_THRESHOLD = 60;
+const AUTOPLAY_MS = 6000;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
@@ -20,6 +21,7 @@ export default function ProjectCarousel({ items }: { items: Project[] }) {
   const current = useRef(0);
   const drag = useRef({ startX: 0, baseX: 0, down: false, moved: false });
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const count = items.length;
 
   const layout = useCallback((animate: boolean) => {
@@ -64,6 +66,17 @@ export default function ProjectCarousel({ items }: { items: Project[] }) {
       gsap.killTweensOf([tr, ...Array.from(tr.children)]);
     };
   }, [layout]);
+
+  // Advance every few seconds, looping back to the first project. Restarts after
+  // any manual move, and holds while the pointer or keyboard focus is inside.
+  useEffect(() => {
+    if (paused || count < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setTimeout(() => {
+      if (!document.hidden) go((current.current + 1) % count);
+    }, AUTOPLAY_MS);
+    return () => window.clearTimeout(id);
+  }, [index, paused, count, go]);
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
@@ -130,6 +143,10 @@ export default function ProjectCarousel({ items }: { items: Project[] }) {
         aria-label="Projects"
         tabIndex={0}
         onKeyDown={onKeyDown}
+        onPointerEnter={(e) => e.pointerType === "mouse" && setPaused(true)}
+        onPointerLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerEnd}
@@ -165,13 +182,14 @@ export default function ProjectCarousel({ items }: { items: Project[] }) {
                   }}
                   className="group block"
                 >
-                  <div className="relative aspect-[2/1] overflow-hidden rounded-2xl border border-line bg-white/[0.03] shadow-[0_0_80px_-35px_rgb(34_211_238/0.5)]">
+                  <div className="skeleton relative aspect-[2/1] overflow-hidden rounded-2xl border border-line shadow-[0_0_80px_-35px_rgb(34_211_238/0.5)]">
                     {cover ? (
                       <Image
                         src={cover.src}
                         alt={cover.alt}
                         fill
                         draggable={false}
+                        data-morph-src
                         sizes="(min-width: 1088px) 640px, 82vw"
                         className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                       />

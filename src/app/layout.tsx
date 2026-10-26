@@ -7,6 +7,7 @@ import Intro from "@/components/Intro";
 import Nav from "@/components/Nav";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import TransitionProvider from "@/components/providers/TransitionProvider";
+import UnderDevelopmentNotice from "@/components/UnderDevelopmentNotice";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Intro />
         <SmoothScroll />
         <Cursor />
+        <UnderDevelopmentNotice />
         <TransitionProvider>
           <Nav />
           <main className="flex-1">{children}</main>

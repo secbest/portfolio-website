@@ -27,7 +27,7 @@ export const awardAliases: Record<string, string> = {
 
 export const profile = {
   name: "Jasper Teo",
-  role: "IT Student & Web Developer",
+  role: "IT Student &  Ambitious Software Developer",
   tagline:
     "Web experiences where the interaction is the point. Animated, accessible and fast, with AI doing the heavy lifting behind the scenes.",
   location: "Singapore",
@@ -62,8 +62,7 @@ export const profile = {
             label: "Achievements",
             kind: "achievement",
             items: [
-              "Director's List 2025/26 Semester 1 & 2",
-              "Director's List 2026/27 Semester 1",
+              "3× Director’s List (top 15% of cohort)",
               "Edusave Certificate of Academic Achievement 2026",
             ],
           },

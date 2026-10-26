@@ -44,7 +44,8 @@ export default async function ProjectPage({
 
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
-
+  const prev = projects[(index - 1 + projects.length) % projects.length];
+  const lines = project.headline ?? [project.title];
   return (
     <div className="mx-auto max-w-6xl px-5 pb-24 pt-36 sm:px-8">
       <TransitionLink
@@ -55,11 +56,18 @@ export default async function ProjectPage({
       </TransitionLink>
 
       <div
-        className={`mb-12 grid items-center gap-8 ${project.images ? "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14" : ""}`}
+        className={`mb-12 grid items-center gap-8 ${project.images ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12" : ""}`}
       >
-        <div>
-          <h1 className="mb-8 text-[clamp(2.5rem,8vw,6.5rem)] font-semibold leading-[0.95] tracking-tighter lg:text-[clamp(2.5rem,4.6vw,4.5rem)]">
-            <SplitWords text={project.title} />
+        <div style={{ containerType: "inline-size" }}>
+          <h1
+            className="mb-8 whitespace-nowrap font-semibold leading-[0.95] tracking-tighter"
+            style={{ fontSize: "min(5rem, 12cqw)" }}
+          >
+            {lines.map((line, i) => (
+              <span key={line} className="block">
+                <SplitWords text={line} delay={0.3 + i * 0.15} />
+              </span>
+            ))}
           </h1>
           <dl className="flex flex-wrap gap-x-10 gap-y-5 text-sm">
             <div>
@@ -109,13 +117,22 @@ export default async function ProjectPage({
       {project.features && (
         <Section title="Key features">
           <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
-            {project.features.map((f, i) => (
-              <li key={f.title} className="bg-background p-6 sm:p-8">
+            {project.features.map((f, i, all) => {
+              const leftover = all.length % 3;
+              const fillRow =
+                i === all.length - 1 && leftover === 1
+                  ? "md:col-span-3"
+                  : i === all.length - 1 && leftover === 2
+                    ? "md:col-span-2"
+                    : "";
+              return (
+              <li key={f.title} className={`bg-background p-6 sm:p-8 ${fillRow}`}>
                 <p className="mb-3 font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</p>
                 <h3 className="mb-2 text-xl font-semibold tracking-tight">{f.title}</h3>
                 <p className="leading-relaxed text-muted">{f.description}</p>
               </li>
-            ))}
+              );
+            })}
           </ul>
         </Section>
       )}
@@ -140,14 +157,28 @@ export default async function ProjectPage({
       )}
 
       <Reveal className="mt-24 border-t border-line pt-10">
-        <p className="mb-2 font-mono text-sm text-muted">Next project</p>
-        <TransitionLink
-          href={`/projects/${next.slug}`}
-          data-cursor="Next"
-          className="text-4xl font-semibold tracking-tight hover:text-accent sm:text-6xl"
-        >
-          {next.title} →
-        </TransitionLink>
+        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-8">
+          <div>
+            <p className="mb-2 font-mono text-sm text-muted">Previous project</p>
+            <TransitionLink
+              href={`/projects/${prev.slug}`}
+              data-cursor="Prev"
+              className="text-2xl font-semibold tracking-tight hover:text-accent sm:text-4xl"
+            >
+              ← {prev.title}
+            </TransitionLink>
+          </div>
+          <div className="sm:text-right">
+            <p className="mb-2 font-mono text-sm text-muted">Next project</p>
+            <TransitionLink
+              href={`/projects/${next.slug}`}
+              data-cursor="Next"
+              className="text-2xl font-semibold tracking-tight hover:text-accent sm:text-4xl"
+            >
+              {next.title} →
+            </TransitionLink>
+          </div>
+        </div>
       </Reveal>
     </div>
   );

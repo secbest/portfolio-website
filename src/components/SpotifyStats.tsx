@@ -85,6 +85,29 @@ function HourChart({ byHour }: { byHour: number[] }) {
   );
 }
 
+/** Shown while the Spotify data is fetched; mirrors the card's overall layout. */
+export function SpotifyStatsSkeleton() {
+  return (
+    <div
+      aria-hidden
+      className="w-full rounded-2xl border border-line bg-white/[0.02] p-5 sm:p-7"
+    >
+      <div className="skeleton mb-5 h-3 w-40 rounded" />
+      <div className="space-y-6">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="skeleton h-24 rounded-xl" />
+          <div className="skeleton h-24 rounded-xl" />
+        </div>
+        <div className="skeleton h-56 rounded-xl" />
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="skeleton h-40 rounded-xl" />
+          <div className="skeleton h-40 rounded-xl" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function SpotifyStats() {
   const data = await getSpotifyOverview();
   if (!data) return null;

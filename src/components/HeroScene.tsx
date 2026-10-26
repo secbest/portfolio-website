@@ -5,7 +5,16 @@ import { useEffect, useState } from "react";
 
 // Three.js is browser-only and heavy, so it's a separate chunk.
 const loadHero = () => import("@/components/Hero3D");
-const Hero3D = dynamic(loadHero, { ssr: false });
+const Hero3D = dynamic(loadHero, { ssr: false, loading: () => <HeroSkeleton /> });
+
+/** Stands in for the particle scene until the 3D chunk has loaded and the intro has lifted. */
+function HeroSkeleton() {
+  return (
+    <div aria-hidden className="grid h-full w-full place-items-center">
+      <div className="skeleton aspect-square w-[min(70%,26rem)] rounded-full [mask-image:radial-gradient(circle,#000_30%,transparent_72%)]" />
+    </div>
+  );
+}
 
 export default function HeroScene() {
   const [ready, setReady] = useState(false);
@@ -23,5 +32,5 @@ export default function HeroScene() {
     return () => window.removeEventListener("intro:reveal", start);
   }, []);
 
-  return ready ? <Hero3D /> : null;
+  return ready ? <Hero3D /> : <HeroSkeleton />;
 }

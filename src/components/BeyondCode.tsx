@@ -1,6 +1,7 @@
+import { Suspense } from "react";
 import HobbyIcon from "@/components/HobbyIcon";
 import Reveal from "@/components/Reveal";
-import SpotifyStats from "@/components/SpotifyStats";
+import SpotifyStats, { SpotifyStatsSkeleton } from "@/components/SpotifyStats";
 import { beyondCode as c, type HobbyIconName } from "@/data/hobbies";
 import { spotifyConfigured } from "@/lib/spotify";
 
@@ -21,23 +22,6 @@ function Body({ paragraphs }: { paragraphs: string[] }) {
       {paragraphs.map((p) => (
         <p key={p}>{p}</p>
       ))}
-    </div>
-  );
-}
-
-function ListCard({ label, items }: { label: string; items: string[] }) {
-  if (!items.length) return null;
-  return (
-    <div className="mt-6 max-w-lg rounded-2xl border border-line bg-white/[0.03] p-5">
-      <p className="mb-3 font-mono text-xs uppercase tracking-widest text-accent">{label}</p>
-      <ul className="space-y-2">
-        {items.map((i) => (
-          <li key={i} className="flex items-start gap-3">
-            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-            {i}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
@@ -71,39 +55,6 @@ function SportsGrid() {
   );
 }
 
-const spineHeights = ["h-44", "h-52", "h-40", "h-48"];
-
-function Bookshelf() {
-  const titles = c.reading.favourites.slice(0, 4);
-  const books = titles.length ? titles : ["", "", ""];
-  return (
-    <div className="flex h-72 flex-col justify-end" aria-hidden={titles.length === 0}>
-      <div className="flex items-end justify-center gap-1.5">
-        {books.map((t, i) => (
-          <div
-            key={`${t}-${i}`}
-            className={`${spineHeights[i % spineHeights.length]} w-11 overflow-hidden rounded-t-md border border-white/10 bg-gradient-to-b from-accent/30 to-accent/5 px-1 py-3 sm:w-14`}
-          >
-            <span className="block max-h-full truncate text-xs font-semibold uppercase tracking-wider text-foreground/80 [writing-mode:vertical-rl] rotate-180">
-              {t}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="h-1.5 rounded-full bg-accent shadow-[0_0_24px_2px_rgb(34_211_238/0.5)]" />
-    </div>
-  );
-}
-
-function GamingPanel() {
-  return (
-    <div className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-2xl border border-line bg-white/[0.02] shadow-[0_0_80px_-40px_rgb(34_211_238/0.6)]">
-      <div className="grid-bg absolute inset-0" aria-hidden />
-      <HobbyIcon name="gaming" className="relative size-28 text-accent drop-shadow-[0_0_24px_rgb(34_211_238/0.6)] sm:size-36" />
-    </div>
-  );
-}
-
 export default function BeyondCode() {
   return (
     <section className="mt-28 border-t border-line pt-20" aria-labelledby="beyond-code-heading">
@@ -125,29 +76,6 @@ export default function BeyondCode() {
           visual={<SportsGrid />}
         />
 
-        <Row
-          flip
-          text={
-            <>
-              <Heading icon="reading" title={c.reading.title} />
-              <Body paragraphs={c.reading.body} />
-              <ListCard label="My favourite reads" items={c.reading.favourites} />
-            </>
-          }
-          visual={<Bookshelf />}
-        />
-
-        <Row
-          text={
-            <>
-              <Heading icon="gaming" title={c.gaming.title} />
-              <Body paragraphs={c.gaming.body} />
-              <ListCard label="My favourite games" items={c.gaming.favourites} />
-            </>
-          }
-          visual={<GamingPanel />}
-        />
-
         <div>
           <Reveal>
             <Heading icon="music" title={c.music.title} />
@@ -155,7 +83,9 @@ export default function BeyondCode() {
           </Reveal>
           {spotifyConfigured() && (
             <Reveal className="mt-8">
-              <SpotifyStats />
+              <Suspense fallback={<SpotifyStatsSkeleton />}>
+                <SpotifyStats />
+              </Suspense>
             </Reveal>
           )}
         </div>

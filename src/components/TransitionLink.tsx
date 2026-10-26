@@ -6,6 +6,8 @@ import { useNavigate } from "@/components/providers/TransitionProvider";
 
 type Props = Omit<ComponentProps<typeof Link>, "href"> & { href: string };
 
+const pickBox = ({ top, left, width, height }: DOMRect) => ({ top, left, width, height });
+
 export default function TransitionLink({ href, onClick, ...props }: Props) {
   const navigate = useNavigate();
 
@@ -22,7 +24,14 @@ export default function TransitionLink({ href, onClick, ...props }: Props) {
       return;
     }
     e.preventDefault();
-    navigate(href);
+    const img = e.currentTarget.querySelector<HTMLImageElement>("[data-morph-src]");
+    const frame = img?.parentElement;
+    navigate(
+      href,
+      img && frame && img.currentSrc
+        ? { src: img.currentSrc, box: pickBox(frame.getBoundingClientRect()) }
+        : undefined,
+    );
   };
 
   return <Link href={href} onClick={handleClick} {...props} />;
