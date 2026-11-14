@@ -24,7 +24,7 @@ A single Next.js app with these routes:
 
 All four are core requirements, not extras:
 
-- **Custom cursor**: follows the pointer, reacts on hover over links and cards, disabled on touch devices
+- **Default cursor**: the site uses the browser's native cursor. Do not add a custom cursor.
 - **Scroll animations**: scroll-triggered reveals, parallax, and pinned sections
 - **Boot intro**: on every full page load, a terminal-style boot sequence ("jasper-os") types out, then the screen splits open to reveal the site. Skippable, and skipped for reduced motion. Page animations wait for the `intro:reveal` event.
 - **3D**: an IT / AI themed hero scene using Three.js: a rotating neural network with signal pulses travelling along its connections. Theme is dark with a cyan accent; avoid blobs or generic shapes.
@@ -82,14 +82,13 @@ Keep skills data in one file (e.g. `src/data/skills.ts`) so the Skills page and 
 - `src/app/`: routes (`/`, `/about`, `/skills`, `/projects`, `/projects/[slug]`, `/contact`)
 - `src/data/`: `profile.ts`, `skills.ts`, `projects.ts`. Edit content here.
 - `src/components/providers/`: `SmoothScroll` (Lenis synced to GSAP), `TransitionProvider` (page-transition curtain)
-- `src/components/`: `Cursor`, `Reveal` (scroll reveal), `SplitWords` (headline intro), `Hero3D` / `HeroScene` (Three.js), `TransitionLink` (use instead of `next/link` for internal navigation so the transition plays)
-- Cursor labels: add `data-cursor="Text"` to any element to show a label in the cursor.
+- `src/components/`: `Reveal` (scroll reveal), `SplitWords` (headline intro), `Hero3D` / `HeroScene` (Three.js), `TransitionLink` (use instead of `next/link` for internal navigation so the transition plays)
 
 ## Conventions
 
 - TypeScript throughout; functional components and hooks only.
 - Components in `src/components`, route files in `src/app`, data in `src/data`, static assets in `public`.
-- Animation code lives in the component that owns it. Shared setup (Lenis, GSAP plugin registration, cursor) goes in a provider or hook under `src/components/providers` or `src/hooks`.
+- Animation code lives in the component that owns it. Shared setup (Lenis, GSAP plugin registration) goes in a provider or hook under `src/components/providers` or `src/hooks`.
 - Clean up GSAP contexts, ScrollTrigger instances, and event listeners on unmount (use `gsap.context()` and `ctx.revert()`).
 - Use `"use client"` only on components that need animation, state, or browser APIs.
 - Match existing naming and style. Don't add comments that restate the code.
@@ -99,7 +98,7 @@ Keep skills data in one file (e.g. `src/data/skills.ts`) so the Skills page and 
 - Respect `prefers-reduced-motion`: disable or simplify animations, parallax, and 3D motion.
 - Lazy-load the 3D scene (`next/dynamic`, `ssr: false`) and keep it light; provide a fallback on low-power or mobile devices.
 - Compress images and video. Use short looping MP4/WebM for previews and embeds for long videos. Use `next/image` for images.
-- Must work at phone width (about 400px). The custom cursor and hover-only interactions need touch alternatives.
+- Must work at phone width (about 400px). Hover-only interactions need touch alternatives.
 - Keep semantic HTML, keyboard focus states, and alt text.
 - Target Lighthouse performance 90+ on desktop.
 

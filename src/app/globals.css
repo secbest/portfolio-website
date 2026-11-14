@@ -48,52 +48,6 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* Custom cursor (only enabled for fine pointers via the Cursor component) */
-html.custom-cursor,
-html.custom-cursor a,
-html.custom-cursor button,
-html.custom-cursor input,
-html.custom-cursor textarea {
-  cursor: none;
-}
-
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  width: 14px;
-  height: 14px;
-  border-radius: 9999px;
-  background: #fff;
-  mix-blend-mode: difference;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    width 0.3s ease,
-    height 0.3s ease,
-    background-color 0.3s ease,
-    opacity 0.3s ease;
-}
-.cursor[data-state="link"] {
-  width: 44px;
-  height: 44px;
-}
-.cursor[data-state="label"] {
-  width: 72px;
-  height: 72px;
-  background: var(--accent);
-  mix-blend-mode: normal;
-}
-.cursor span {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #0a0a0a;
-}
 
 /* Greeting that types out under the face */
 @keyframes greeting-in {
@@ -305,9 +259,6 @@ html[data-morph] [data-hero-target] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cursor {
-    display: none;
-  }
   .signal-border {
     animation: none;
   }
