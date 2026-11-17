@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AboutVideo from "@/components/AboutVideo";
+import AboutPortrait from "@/components/AboutPortrait";
 import BeyondCode from "@/components/BeyondCode";
 import AwardsList, { type Award } from "@/components/AwardsList";
 import EntryList from "@/components/EntryList";
@@ -52,9 +52,9 @@ export default function AboutPage() {
           </Reveal>
         </div>
 
-        <Reveal className="mx-auto w-full max-w-sm lg:sticky lg:top-28 lg:mt-6 lg:max-w-none">
-          <AboutVideo className="aspect-[4/5]" />
-        </Reveal>
+        <div className="mx-auto w-full max-w-sm lg:sticky lg:top-28 lg:mt-6 lg:max-w-none">
+          <AboutPortrait className="aspect-[4/5]" />
+        </div>
       </div>
 
       <Block title="Education" hint="Click an item to see more">
